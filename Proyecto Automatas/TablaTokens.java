@@ -22,7 +22,9 @@ import java.util.List;
  *     ajustarse es el formato exacto de impresión si el profesor pide
  *     un formato distinto (por ejemplo separado por comas en vez de
  *     alineado en columnas).
+ *      hola
  */
+
 public class TablaTokens {
 
     /** Un renglón de la tabla de tokens. */
