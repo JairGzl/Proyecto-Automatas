@@ -80,7 +80,7 @@ public class Tokens {
     // ============================================================
     // 5. IDENTIFICADORES Y CONSTANTES -> códigos -61 a -64
     // ============================================================
-    public static final int IDENTIFICADOR = -61;
+    public static final int pepe = -61;
     public static final int CTE_ENTERA    = -62;
     public static final int CTE_REAL      = -63;
     public static final int CTE_STRING    = -64;
