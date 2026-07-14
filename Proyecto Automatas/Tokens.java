@@ -55,7 +55,7 @@ public class Tokens {
     // 4. OPERADORES LÓGICOS -> códigos -51 a -53
     
     public static final int AND_LOGICO    = -51; // &&
-    public static final int OR_LOGICO     = -52; // || (confirmar con el profe)
+    public static final int OR_LOGICO     = -52; // || 
     public static final int NOT_LOGICO    = -53; // !
 
     
