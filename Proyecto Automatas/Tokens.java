@@ -59,12 +59,16 @@ public class Tokens {
     public static final int NOT_LOGICO    = -53; // !
 
     
-    // 5. IDENTIFICADORES Y CONSTANTES -> códigos -61 a -64
+    // 5. IDENTIFICADORES -61 a -64 Y CONSTANTES -> códigos -71 a -73 
     
     public static final int IDENTIFICADOR = -61;
-    public static final int CTE_ENTERA    = -62;
-    public static final int CTE_REAL      = -63;
-    public static final int CTE_STRING    = -64;
+    public static final int ID_ENTERO     = -62;
+    public static final int ID_REAL       = -63;
+    public static final int ID_STRING     = -64;
+
+    public static final int CTE_ENTERA    = -71;
+    public static final int CTE_REAL      = -72;
+    public static final int CTE_STRING    = -73;
 
     
     // 6. CARACTERES ESPECIALES QUE SÍ GENERAN TOKEN -> -81 a -88
