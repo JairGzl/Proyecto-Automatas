@@ -97,7 +97,7 @@ public class Tokens {
 
     /**
      * Imprimir el nombre de un token a partir
-     * de su código, útil 
+     * de su código. 
      */
     public static String nombre(int codigo) {
         for (Map.Entry<String, Integer> e : RESERVADAS.entrySet()) {
