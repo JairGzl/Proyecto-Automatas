@@ -3,36 +3,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * CLASE 2: AUTOMATA
- * ---------------------------------------------------------------------
- * RESPONSABLE SUGERIDO: Integrante 2
- *
- * Qué debe hacer esta clase:
- *   - Definir el autómata finito del análisis léxico completo: sus
- *     ESTADOS (nodos) y sus TRANSICIONES (arcos) entre estados según
- *     la "clase de carácter" que se lea (letra, dígito, comilla, etc).
- *   - Cada Estado sabe si es de aceptación (final) y, si lo es, a qué
- *     token corresponde (usa las constantes de Tokens.java).
- *   - Esta clase es la que "diagrama" en código lo mismo que en clase
- *     se dibuja a mano con círculos y flechas.
- *   - MatrizTransicion.java tomará estos mismos estados/transiciones
- *     para construir la tabla numérica (la matriz de transiciones).
- *
- * Qué falta por hacer (trabajo del equipo):
- *   - Ya se dejó armado, a modo de EJEMPLO funcional, el sub-autómata
- *     para: identificadores / palabras reservadas, operadores de uno
- *     o dos caracteres (<, <=, etc), y símbolos especiales simples.
- *   - FALTA agregar los estados para: constantes reales, constantes
- *     string (con el caso de comilla escapada \"), y comentarios (\\).
- *     Cada quien puede agregar sus estados nuevos en el método
- *     construirAutomata() siguiendo el mismo patrón.
- *   - Las "clases de carácter" (columnas) usadas aquí son:
- *     "letra", "digito", "punto", "comilla", "barra", "dospuntos",
- *     "amper", "pipe", "otros". Pueden agregar más si su automata
- *     lo requiere, pero deben avisar al responsable de MatrizTransicion
- *     para que la matriz las incluya también.
- */
 public class Automata {
 
     /** Representa un solo estado (nodo) del autómata. */
@@ -68,23 +38,11 @@ public class Automata {
     }
 
     /**
-     * Construye el autómata del lenguaje. Esta es la parte que el
-     * equipo debe completar/ajustar según el diseño final que hagan
-     * a mano en papel antes de programar (paso 3 y 4 de la metodología
-     * del PDF).
-     *
-     * Ya viene armado un ejemplo funcional que cubre:
-     *   - Estado 0: estado inicial
-     *   - Identificadores / palabras reservadas (letra + letras/dígitos)
-     *   - Constantes enteras (dígito+)
-     *   - Operadores relacionales de 1 o 2 caracteres (<, <=, <>, etc)
-     *   - Símbolos especiales de un solo caracter ( ; , [ ] ( ) )
-     *   - ":" y ":=" 
-     *
-     * TODO equipo: agregar aquí los estados para:
-     *   - Constantes reales (con el punto decimal)
-     *   - Constantes string (con manejo de \" escapado)
-     *   - Comentarios (\\ hasta fin de línea, no genera token)
+     * Construye el autómata completo del lenguaje: estado inicial,
+     * identificadores/reservadas, constantes enteras y reales,
+     * constantes string, operadores relacionales, y ":"/":=".
+     * (Los comentarios "\\" se resuelven aparte, en Aplicacion.java,
+     * porque no producen token — ver nota al final de este método).
      */
     public void construirAutomata() {
         Estado e0 = nuevoEstado("Estado inicial");
@@ -109,14 +67,21 @@ public class Automata {
         e2.esFinal = true;
         e2.tokenSiFinal = Tokens.CTE_ENTERA;
 
-        // TODO equipo (constantes reales): agregar aquí, por ejemplo,
-        // un estado e2b para cuando después de dígitos aparece un
-        // "punto" y luego se exige al menos un dígito más (regla:
-        // "no pueden iniciar y terminar con punto decimal").
-        // e2.addTransicion("punto", e2b.id);
-        // e2b.addTransicion("digito", e2c.id);
-        // e2c.addTransicion("digito", e2c.id);
-        // e2c.esFinal = true; e2c.tokenSiFinal = Tokens.CTE_REAL;
+        // ---- Constantes reales ----
+        // Regla del proyecto: "no pueden iniciar y terminar con punto
+        // decimal" -> por eso solo se llega aquí DESPUÉS de al menos
+        // un dígito (desde e2), y el estado del punto (e10) NO es
+        // final: obliga a que venga al menos un dígito más después
+        // del punto para poder aceptar.
+        Estado e10 = nuevoEstado("Leyo punto decimal, falta al menos 1 digito");
+        e2.addTransicion("punto", e10.id);
+        // e10 NO es final: "3." solo (sin dígitos después) es error/incompleto
+
+        Estado e11 = nuevoEstado("Leyendo parte decimal de constante real");
+        e10.addTransicion("digito", e11.id);
+        e11.addTransicion("digito", e11.id);
+        e11.esFinal = true;
+        e11.tokenSiFinal = Tokens.CTE_REAL;
 
         // ---- Operador relacional que empieza con "<" ----
         Estado e3 = nuevoEstado("Leyo '<'");
@@ -160,12 +125,40 @@ public class Automata {
         // (se resuelven directo, sin necesitar un estado propio,
         //  ver Aplicacion.java -> metodo escanear())
 
-        // TODO equipo (strings): agregar estados para comillas,
-        // manejo del caso "\\\"" (barra invertida + comilla dentro
-        // del string), y cierre obligatorio en la misma línea.
+        // ---- Constantes String ----
+        // e12 = "dentro del string, leyendo caracteres". Acepta
+        // CUALQUIER clase de caracter (excepto la comilla que cierra
+        // y la barra invertida que inicia un escape), por eso se
+        // le agregan transiciones a sí mismo para todas las columnas
+        // "normales". El salto de línea NO se agrega aquí porque
+        // Aplicacion.java corta el escaneo al llegar a '\n' (por
+        // regla del proyecto: "un string debe terminar en la misma
+        // línea"), así que si no se cerró antes del salto de línea,
+        // automáticamente queda sin estado final -> error.
+        Estado e12 = nuevoEstado("Dentro de un string");
+        e0.addTransicion("comilla", e12.id); // comilla inicial abre el string
+        for (String clase : new String[]{
+                "letra", "digito", "menor", "mayor", "igual",
+                "dospuntos", "punto", "amper", "pipe", "otros"}) {
+            e12.addTransicion(clase, e12.id);
+        }
 
-        // TODO equipo (comentarios): agregar estado para "\\" que
-        // consuma todo hasta fin de línea sin generar token.
+        Estado e13 = nuevoEstado("Leyo '\\' dentro del string (posible escape)");
+        e12.addTransicion("barra", e13.id);
+        // Después de la barra invertida, cualquier caracter (incluida
+        // otra comilla escapada \") se toma como literal y se regresa
+        // a seguir leyendo el string normalmente.
+        for (String clase : new String[]{
+                "letra", "digito", "menor", "mayor", "igual",
+                "dospuntos", "punto", "amper", "pipe", "otros", "barra", "comilla"}) {
+            e13.addTransicion(clase, e12.id);
+        }
+
+        Estado e14 = nuevoEstado("String cerrado");
+        e12.addTransicion("comilla", e14.id); // comilla NO escapada -> cierra el string
+        e14.esFinal = true;
+        e14.tokenSiFinal = Tokens.CTE_STRING;
+
     }
 
     /**
