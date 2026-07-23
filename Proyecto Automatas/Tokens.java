@@ -133,6 +133,9 @@ public class Tokens {
             case OR_LOGICO: return "||";
             case NOT_LOGICO: return "!";
             case IDENTIFICADOR: return "Identificador";
+            case ID_ENTERO: return "Id_entero";
+            case ID_REAL: return "Id_real";
+            case ID_STRING: return "Id_string";
             case CTE_ENTERA: return "Cte_entera";
             case CTE_REAL: return "Cte_real";
             case CTE_STRING: return "Cte_string";
