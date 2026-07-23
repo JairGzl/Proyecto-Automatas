@@ -82,10 +82,14 @@ public class Tokens {
     public static final int PARENTESIS_CIERRA = -87; // )
     public static final int ASIGNACION    = -88; // :=
 
+    //7. Caracteres especiales que no generan token
+    public static final int COMILLAS      = 90;
+
+
     
     // 7. CÓDIGO DE ERROR
     
-    public static final int ERROR = -100;
+    public static final int ERROR = -1000;
 
     /**
      * Regresa el código de una palabra reservada, o null si la cadena
@@ -94,6 +98,17 @@ public class Tokens {
     public static Integer codigoReservada(String palabra) {
         return RESERVADAS.get(palabra.toUpperCase());
     }
+/**No Generan token
+ * 
+*/
+    public static final String[][] NO_GENERAN_TOKEN = {
+            {"\"",   "Comilla: delimita las constantes String, no genera token propio"},
+            {".",    "Punto: separador, no genera token propio"},
+            {"BCO",  "Espacio en blanco"},
+            {"TAB",  "Tabulador"},
+            {"EOLN", "Fin de línea (salto de línea)"},
+            {"EOF",  "Fin de archivo"}
+    };
 
     /**
      * Imprimir el nombre de un token a partir

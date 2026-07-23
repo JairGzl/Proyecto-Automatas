@@ -37,12 +37,19 @@ public class TablaTokens {
         return entradas;
     }
 
+    
+
     /**
      * Genera la tabla de tokens en formato de texto.
      */
     public String exportarTexto() {
 
         StringBuilder sb = new StringBuilder();
+
+        sb.append("\n================ CARACTERES QUE NO GENERAN TOKEN ================\n\n");
+        for (String[] c : Tokens.NO_GENERAN_TOKEN) {
+            sb.append(String.format("%-6s %s%n", c[0], c[1]));
+        }
 
         sb.append("================ TABLA DE TOKENS ================\n\n");
 
