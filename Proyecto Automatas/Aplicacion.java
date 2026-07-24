@@ -83,7 +83,7 @@ public class Aplicacion {
             // --- Comentarios: "\\" hasta fin de linea. No generan token. ---
             // (No pasan por el automata: un comentario no produce token,
             //  así que se resuelve directo aquí, igual que && y ||)
-            if (c == '\\' && i + 1 < n && codigo.charAt(i + 1) == '\\') {
+            if (c == '/' && i + 1 < n && codigo.charAt(i + 1) == '/') {
                 i += 2;
                 while (i < n && codigo.charAt(i) != '\n') {
                     i++;
