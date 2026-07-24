@@ -1,32 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * CLASE 3: MATRIZ DE TRANSICION
- * ---------------------------------------------------------------------
- * RESPONSABLE SUGERIDO: Integrante 3
- *
- * Qué debe hacer esta clase:
- *   - Tomar los Estados y transiciones definidos en Automata.java y
- *     "aplanarlos" en una tabla (matriz) de:
- *         filas    = estados
- *         columnas = clases de caracter (letra, digito, etc.)
- *         valor    = estado destino, o -100 (Tokens.ERROR) si no hay
- *                    transición definida para esa combinación.
- *   - Esta clase también debe clasificar cada caracter leído del
- *     archivo fuente en una de las columnas (método claseDe(char)).
- *     Esa función es la que usará Aplicacion.java para "moverse" por
- *     la matriz mientras escanea el .txt de entrada.
- *
- * Qué falta por hacer (trabajo del equipo):
- *   - Si el equipo agrega estados nuevos en Automata.java (para
- *     strings, reales, comentarios), probablemente necesiten agregar
- *     columnas nuevas aquí en COLUMNAS y en claseDe(char). Ejemplo:
- *     ya se dejaron listas "punto", "comilla", "barra", "amper",
- *     "pipe" preparadas para cuando completen esos autómatas.
- *   - Revisar que cada clase de caracter sea mutuamente excluyente
- *     (que un mismo caracter no caiga en dos columnas a la vez).
- */
 public class MatrizTransicion {
 
     // Columnas de la matriz = clases de caracter reconocidas
