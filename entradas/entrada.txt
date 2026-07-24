@@ -1,10 +1,4 @@
-clase @Prueba
-{
-   var &x , &y , &z ; 
-   metodo vacio @main () 
-   {
-       &x = 100 - (( &y + 4 ) / 2 + &z ) * ( 20 + 5 ) ; 
-       &x = "4.5"+1;
-       escribir ( &x ) ; 
-   }
-}
+"Hola Mundo
+//Hola Mundo
+4.5 .5 5.
+x71 71x
