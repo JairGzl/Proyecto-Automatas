@@ -1,0 +1,6 @@
+//Hola como estas
+"Hola Mundo"
+Como estas"
+"Hola mundo
+.1000  1000.
+
