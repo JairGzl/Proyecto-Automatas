@@ -3,4 +3,12 @@
 Como estas"
 "Hola mundo
 .1000  1000.
++20
+-20
+616843203
+5525
+X=5+5
+if (i=0;i++;i>10){
+    println("Hola es 1");
+}
 

@@ -94,6 +94,7 @@ public class MatrizTransicion {
      * lenguaje como '@' o '#') cae en "otros".
      */
     public static String claseDe(char c) {
+        if (c == '\n' || c == '\r') return "salto";
         if (Character.isLetter(c)) return "letra";
         if (Character.isDigit(c)) return "digito";
         if (c == '<') return "menor";
